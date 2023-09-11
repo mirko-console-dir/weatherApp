@@ -6,6 +6,7 @@ import {Feather} from '@expo/vector-icons'
 /* Style sheet is the object offer from react native for the css */
 /* Flex is used to tell how much of the screen the element is gonna fill*/
 /* Font size rapresent density and indipendent pixels they don't have units */
+
 /* Temperature */
 /* Feels like */
 /* High and Low */
