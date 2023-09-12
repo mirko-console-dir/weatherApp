@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: 'pink',
-      marginTop: StatusBar.currentHeight || 0
+      marginTop: StatusBar.currentHeight || 0, /* for android */
     },
     image: {
      /*  height: 100,
