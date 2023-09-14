@@ -9,9 +9,9 @@ const App = () => {
   const message = 'Current Weather'
   return (
     <View style={styles.container}> 
-      {/* <CurrentWeather/> */}
+      <CurrentWeather/> 
       {/* <UpcomingWeather/> */}
-      <City/>
+      {/* <City/> */}
     </View>
   );
 }

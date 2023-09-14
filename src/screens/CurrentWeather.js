@@ -2,6 +2,7 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, SafeAreaView} from 'react-native';
 import {Feather} from '@expo/vector-icons'
+import RowText from '../components/RowText';
 /* safe area is used to allow to see our component in a safe area for all devices Mobile/Tablet */
 /* Style sheet is the object offer from react native for the css */
 /* Flex is used to tell how much of the screen the element is gonna fill*/
@@ -15,24 +16,19 @@ import {Feather} from '@expo/vector-icons'
 /* Icon & Background color */
 
 const CurrentWeather = () => {
-  const message = 'Current Weather'
+  const messageTitle = 'Current Weather'
+  const {wrapper, container, temp, feels, highLowWrapper, highLow, bodyWrapper, description, message} = styles
   return (
-    <SafeAreaView style={styles.wrapper}> 
-      <View style={styles.container}>
-      <Feather name="sun" size={100} />
-        <Text>{message}</Text>
-        <Text style={styles.temp}>6</Text>
-        <Text style={styles.feels}>Feels like 5</Text>
-        <View style={styles.highLowWrapper}>
-          <Text style={styles.highLow}>Hight: 8 </Text>
-          <Text style={styles.highLow}>Low: 6</Text>
-        </View>
+    <SafeAreaView style={wrapper}> 
+      <View style={container}>
+        <Feather name="sun" size={100} />
+        <Text>{messageTitle}</Text>
+        <Text style={temp}>6</Text>
+        <Text style={feels}>Feels like 5</Text>
+        <RowText messageOne={'High: 8'} messageTwo={'Low: 6'} containerStyles={highLowWrapper} messageOneStyles={highLow} messageTwoStyles={highLow}/>
         <StatusBar style="auto" />
       </View>
-        <View style={styles.bodyWrapper}>
-          <Text style={styles.description}>It's Sunny </Text>
-          <Text style={styles.message}>It's perfect t-shirt weather</Text>
-        </View>
+      <RowText messageOne={"It's Sunny"} messageTwo={"It's perfect t-shirt weather"} containerStyles={bodyWrapper} messageOneStyles={description} messageTwoStyles={message}/>
     </SafeAreaView>
   );
 }
