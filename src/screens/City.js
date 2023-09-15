@@ -2,27 +2,35 @@ import React from 'react'
 import {  StyleSheet, Text , SafeAreaView, ImageBackground, StatusBar, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import IconText from '../components/IconText';
+import moment from 'moment';
 
-/* pass an array of styles to an object to don't duplicate the styles */
+
 
 /* city name */
 /* city country */
 /* population */
 /* sunrise & sunset */
-const City = () => {
+const City = ({weatherData}) => {
     const {container, cityName, cityText, countryName, populationWrapper, populationText, riseSetWrapper,riseSetText, imageLayout, rowLayout} = styles
+
+    const {name, country, population, sunrise, sunset} = weatherData;
+
   return (
     <SafeAreaView style={container}> 
         <ImageBackground source={require('../../assets/city.jpg')} style={imageLayout}>
-            <Text style={[cityName, cityText]}>Foukoka</Text>
-            <Text style={[countryName, cityText]}>Japan</Text>
+
+            <Text style={[cityName, cityText]}>{name}</Text>
+            <Text style={[countryName, cityText]}>{country}</Text>
+
             <View style={[populationWrapper, rowLayout]}>
-                <IconText iconName={'user'} iconColor={'white'} bodyText={'8000'} bodyTextStyles={populationText}/>
+                <IconText iconName={'user'} iconColor={'white'} bodyText={`Population ${population}`} bodyTextStyles={populationText}/>
             </View>
+
             <View style={[riseSetWrapper, rowLayout]}>
-                <IconText iconName={'sunrise'} iconColor={'white'} bodyText={'10:46:58am'} bodyTextStyles={riseSetText}/>
-                <IconText iconName={'sunset'} iconColor={'white'} bodyText={'17:28:15pm'} bodyTextStyles={riseSetText}/>
+                <IconText iconName={'sunrise'} iconColor={'white'} bodyText={moment(sunrise).format('h:mm:ss a')} bodyTextStyles={riseSetText}/>
+                <IconText iconName={'sunset'} iconColor={'white'} bodyText={moment(sunset).format('h:mm:ss a')} bodyTextStyles={riseSetText}/>
             </View>
+
         </ImageBackground>
     </SafeAreaView>
   )

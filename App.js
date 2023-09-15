@@ -1,33 +1,39 @@
 import React from 'react';
+import { View, ActivityIndicator, StyleSheet  } from 'react-native';
 import Tabs from './src/components/Tabs';
 import { NavigationContainer } from '@react-navigation/native';
-/* BABEL JUST TRANSLATE TO JS */
-/* react native is a components framework with root:app and other:src  */
-/* The navigation system involves pushing and popping screens within a container, with two primary navigation types: stack and tab navigation. 
-On Android, tabs appear at the top, while on iOS, they appear at the bottom. 
-To set up material top tabs and adapt their display based on the platform, developers should use the React Native platform API and the 'ios' property to identify the user's platform. */
-
-
+import ErrorItem from './src/components/ErrorItem';
+import { useGetWeather } from './src/hooks/useGetWeather';
 
 const App = () => {
   const message = 'Current Weather'
-  return (
-    <NavigationContainer>
-    <Tabs/>
+  const [loading, error, weather] = useGetWeather()
+  /* console.log(loading, error, weather);
+  console.log(weather); */
 
-      {/* <View style={styles.container}>  */}
-         {/*  <CurrentWeather/>  */}
-          {/* <UpcomingWeather/> */}
-          {/* <City/> */}
-       {/*  </View> */}
-    </NavigationContainer>
-  );
+  if(weather && weather.list && !loading) {
+    return (
+      <NavigationContainer>
+        <Tabs weather={weather}/>
+      </NavigationContainer>
+    );
+  }
+  return (
+    <View style={styles.container}>
+      {error ? 
+        (<ErrorItem/>)
+        : 
+        (<ActivityIndicator size={"large"} color={"blue"} />)
+        }
+    </View>
+  )
+  
 }
 
-
-/* const styles = StyleSheet.create({ 
+const styles = StyleSheet.create({ 
   container: {
     flex: 1,
+    justifyContent: 'center',
   },
-}); */
+}); 
 export default App
