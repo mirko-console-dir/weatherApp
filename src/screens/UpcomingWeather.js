@@ -2,18 +2,9 @@ import React from 'react'
 import { SafeAreaView, StyleSheet, Text , FlatList, View, StatusBar, Image, ImageBackground} from 'react-native';
 import {Feather} from '@expo/vector-icons'
 import ListItem from '../components/ListItem';
-/* List */
-/* type of lists FlatList, SectionList, VizualizedList (not realy used, less powerfull )*/
-/* FlatList standard list items (require data and renderItem), SectionList broken lists in sections (require sections and renderItem)*/
-/* Data for Flatlist must be an array , Data for Section list must be an array of Objects */
-/* rederlist () function to render the data items of the list */
-/* keyextrachtor to take a unique id to the item */
-/* ListEmptyComponent is usefull component that show something else if there is not a component for example if we are waiting for a fetching */
-/* ListHeader and ListFooter */
-/* Image keepinmind in react if set a size for the image is gonna store the data in the memory  */
-/* props are data passed from a parent to a child, props are immutable when passed from parent to child (unidirectional passage data) */
 
-const DATA = [
+
+/* const DATA = [
   {
     dt_txt : "2023-02-18 12:00:00",
     main: {
@@ -52,6 +43,7 @@ const DATA = [
     ]
   }
 ];
+ */
 /*  Became ListItem component
 const Item = (props) => {
   const {dt_txt, min, max, condition } = props
@@ -64,7 +56,7 @@ const Item = (props) => {
     </View>
   )
 } */
-const UpcomingWeather = () => {
+const UpcomingWeather = ({weatherData}) => {
   {/* <Item condition={item.weather[0].main } dt_txt={item.dt_txt} min={item.main.temp_min} max={item.main.temp_max}/> */}
   const renderItem = ({item}) => (
     <ListItem condition={item.weather[0].main } dt_txt={item.dt_txt} min={item.main.temp_min} max={item.main.temp_max}/>
@@ -75,10 +67,10 @@ const UpcomingWeather = () => {
   return (
     <SafeAreaView style={container}> 
     <ImageBackground source={require('../../assets/thunderstorm.jpg')} style={image}>
-        <Text style={{color: 'white'}}>Upcoming Weather</Text>
+        {/* <Text style={{color: 'white'}}>Upcoming Weather</Text> */}
         {/* <Image source={require('../../assets/thunderstorm.jpg')} style={styles.image}/> */}
         <FlatList
-          data={DATA}
+          data={weatherData}
           renderItem={renderItem}
           keyExtractor={item=>item.dt_txt}
           ItemSeparatorComponent={()=> <View style={{backgroundColor: 'black', height: 2}}></View>}

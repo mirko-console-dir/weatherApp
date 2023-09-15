@@ -10,8 +10,5 @@ const RowText = (props) => {
     </View>
   )
 }
-/* const styles = StyleSheet.create({
-
-}) */
 
 export default RowText

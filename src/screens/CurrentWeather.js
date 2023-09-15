@@ -3,10 +3,8 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, SafeAreaView} from 'react-native';
 import {Feather} from '@expo/vector-icons'
 import RowText from '../components/RowText';
-/* safe area is used to allow to see our component in a safe area for all devices Mobile/Tablet */
-/* Style sheet is the object offer from react native for the css */
-/* Flex is used to tell how much of the screen the element is gonna fill*/
-/* Font size rapresent density and indipendent pixels they don't have units */
+import { weatherType } from '../utils/weatherType';
+
 
 /* Temperature */
 /* Feels like */
@@ -15,20 +13,46 @@ import RowText from '../components/RowText';
 /* Additional text */
 /* Icon & Background color */
 
-const CurrentWeather = () => {
+const CurrentWeather = ({weatherData}) => {
   const messageTitle = 'Current Weather'
-  const {wrapper, container, temp, feels, highLowWrapper, highLow, bodyWrapper, description, message} = styles
+  const {wrapper, container, tempStyles, feels, highLowWrapper, highLow, bodyWrapper, description, message} = styles
+
+  const { main: { temp, feels_like, temp_max, temp_min}, weather} = weatherData
+
+  /* to acess to che correct weather type obj I need to acess to the weather condition */ 
+  /* ? optional changing is gonna return undefined if some prop not exist instead an error */
+  const weatherCondition = weather[0]?.main
+
   return (
-    <SafeAreaView style={wrapper}> 
+    <SafeAreaView style={[
+      wrapper, 
+      { backgroundColor: weatherType[weatherCondition]?.backgroundColor}
+    ]}> 
       <View style={container}>
-        <Feather name="sun" size={100} />
+        <Feather 
+          name={weatherType[weatherCondition]?.icon} 
+          size={100} 
+          color={'white'}
+        />
         <Text>{messageTitle}</Text>
-        <Text style={temp}>6</Text>
-        <Text style={feels}>Feels like 5</Text>
-        <RowText messageOne={'High: 8'} messageTwo={'Low: 6'} containerStyles={highLowWrapper} messageOneStyles={highLow} messageTwoStyles={highLow}/>
+        <Text style={tempStyles}>{temp}</Text>
+        <Text style={feels}>{`Feels like ${feels_like}°`}</Text>
+        <RowText 
+          messageOne={`High: ${temp_max}° `} 
+          messageTwo={`Low: ${temp_min}°`} 
+          containerStyles={highLowWrapper} 
+          messageOneStyles={highLow} 
+          messageTwoStyles={highLow}
+        />
         <StatusBar style="auto" />
       </View>
-      <RowText messageOne={"It's Sunny"} messageTwo={"It's perfect t-shirt weather"} containerStyles={bodyWrapper} messageOneStyles={description} messageTwoStyles={message}/>
+      <RowText 
+        messageOne={weather[0]?.description} 
+        messageTwo={weatherType[weatherCondition]?.message} 
+        containerStyles={bodyWrapper} 
+        messageOneStyles={description} 
+        messageTwoStyles={message}
+      />
     </SafeAreaView>
   );
 }
@@ -44,7 +68,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'azure',
     flex: 1
   },
-  temp: {
+  tempStyles: {
     color: 'black',
     fontSize: 48
   },
